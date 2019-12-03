@@ -3,36 +3,28 @@ package learn;
 public class ABCSubSequence {
 
 	public static int countAbcSequece(String s) {
+		StringBuilder strBuilder = new StringBuilder(s);
 		String pattern = "ABC";
-		return count(s, pattern);
-	}
-
-	public static int count(String s, String pattern) {
-		if (s.length() <= 0 && pattern.length() > 0) {
-			return 0;
-		}
-		if (pattern.length() <= 0 && s.length() > 0) {
-			return 1;
-		}
-		if (pattern.length() == 1 && s.length() == 1) {
-			return 1;
-		}
-		if (pattern.length() == 1 && s.length() > 1) {
-			
-			//TODO
-		}
 		int index = 0;
 		int count = 0;
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) == pattern.charAt(index)) {
-				count += count(s.substring(i + 1), pattern.substring(index + 1)) + count(s.substring(i + 1), pattern);
+		while (index != -1 && strBuilder.length() > 0) {
+			int strIndex = strBuilder.toString().indexOf(pattern.charAt(index));
+			if (strIndex == -1) {
+				return count;
+			} else {
+				index++;
+				strBuilder.delete(0, strIndex+1);
+			}
+			if (index > 2) {
+				index = 0;
+				count++;
 			}
 		}
 		return count;
 	}
 
 	public static void main(String[] args) {
-		System.out.println(countAbcSequece("ABCABC"));
+		System.out.println(countAbcSequece("BAC"));
 	}
 
 }
